@@ -14,6 +14,6 @@ error_reporting(E_ALL);
 require_once 'vendor/autoload.php';
 
 
-$m = model('ddd');
+$m = model('users')->where('id', 101);
 
-print_r($m->getConnection());
+print_r($m->first('id'));
