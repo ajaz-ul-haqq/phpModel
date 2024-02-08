@@ -33,7 +33,7 @@ class BaseModel {
 
         } catch (\Exception $exception){
             die('connection error');
-            header('Location:db_connect.php');
+            /** Do Whatever you wanna do */
         }
     }
 
@@ -44,8 +44,12 @@ class BaseModel {
         }
 
         $this->conn = $conn;
-        $table = ($table === 'system') ? '`system`' : $table;
         $this->table = $table;
+    }
+
+    protected function shouldLog(): bool
+    {
+        return SHOULD_LOG && (in_array('*', LOGGABLE['table']) || in_array($this->table, LOGGABLE['table']) );
     }
 
     protected function getConnection(): mySqlObject
@@ -95,11 +99,7 @@ class BaseModel {
     {
         $query = $sql ?: $this->baseQuery();
 
-        if($this->table != 'logs' && in_array($this->operation, ['INSERT', 'UPDATE'])){
-            $fp = fopen('query.log', 'a+');
-            fwrite($fp, '['.date('Y-m-d H:i:s').'] ('.$query.')'.PHP_EOL);
-            fclose($fp);
-        }
+        $this->createLogs($query);
 
         $result = $this->conn->query($query);
 
@@ -215,5 +215,14 @@ class BaseModel {
         }
 
         return $query;
+    }
+
+    private function createLogs($query) : void
+    {
+        if($this->shouldLog()){
+            $fp = fopen('query.log', 'a+');
+            fwrite($fp, '['.date('Y-m-d H:i:s').'] ('.$query.')'.PHP_EOL);
+            fclose($fp);
+        }
     }
 }
