@@ -49,7 +49,7 @@ class BaseModel {
 
     protected function shouldLog(): bool
     {
-        return SHOULD_LOG && (in_array('*', LOGGABLE['table']) || in_array($this->table, LOGGABLE['table']) );
+        return SHOULD_LOG;
     }
 
     protected function getConnection(): mySqlObject
@@ -195,8 +195,12 @@ class BaseModel {
         }
     }
 
-    private function getBaseQueryForModel()
+    private function getBaseQueryForModel(): string
     {
+        if ($this->operation === 'DELETE') {
+           $this->columns = '';
+        }
+
         return $this->operation.$this->columns.' FROM '.$this->table;
     }
 

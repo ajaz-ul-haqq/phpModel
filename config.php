@@ -8,7 +8,7 @@ return [
 
     'password' => 9090,
 
-    'database' => 'dbName',
+    'database' => 'next',
 
     'shouldLog' => true,
 

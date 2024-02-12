@@ -130,8 +130,10 @@ class Model extends BaseModel
         return $total;
     }
 
-    public function execute($sql = null): array
+    public function delete(): void
     {
-        return parent::execute($sql);
+        $this->operation = 'DELETE';
+
+        $this->execute();
     }
 }

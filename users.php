@@ -2,7 +2,11 @@
 
 require_once 'bootstrap.php';
 
-$users = model('user');
+$users = model('vouchers');
+
+print_r($users->where('amount', '=', '0')->delete());
+
+die('...end');
 
 $allUsers = $users->all();
 
