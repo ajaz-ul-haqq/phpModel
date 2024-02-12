@@ -130,10 +130,10 @@ class Model extends BaseModel
         return $total;
     }
 
-    public function delete(): void
+    public function delete()
     {
         $this->operation = 'DELETE';
 
-        $this->execute();
+        return $this->execute();
     }
 }

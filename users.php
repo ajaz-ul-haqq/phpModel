@@ -2,11 +2,7 @@
 
 require_once 'bootstrap.php';
 
-$users = model('vouchers');
-
-print_r($users->where('amount', '=', '0')->delete());
-
-die('...end');
+$users = model('users');
 
 $allUsers = $users->all();
 
@@ -27,6 +23,8 @@ $rawSql = $users->whereIn('role', ['admin', 'agent'])->toSql();
 $userByIdOne = $users->find(1);
 
 $userByIdOneRole = $users->where('id', 1)->value('role'); // $users->find(1)['role'];
+
+$deleteAllUsers =  $users->delete();
 
 
 
