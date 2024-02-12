@@ -54,7 +54,7 @@ These models are designed to represent database tables and interact with data st
         
         require_once 'bootstrap.php';
         
-        $users = model('user');
+        $users = model('users');
         
         $allUsers = $users->all();
         
@@ -72,9 +72,8 @@ These models are designed to represent database tables and interact with data st
         
         $rawSql = $users->whereIn('role', ['admin', 'agent'])->toSql();
 
-$userByIdOne = $users->find(1);
-
-$userByIdOneRole = $users->where('id', 1)->value('role'); // $users->find(1)['role'];
-`
+        $userByIdOne = $users->find(1);
+        
+        $userByIdOneRole = $users->where('id', 1)->value('role'); // $users->find(1)['role'];
 
 
